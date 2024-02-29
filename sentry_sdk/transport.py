@@ -594,3 +594,10 @@ def make_transport(options):
         return transport_cls(options)
 
     return None
+
+class DEFAULT_HTTP_TRANSPORT(HttpTransport):
+    def _get_pool_options(self, ca_certs):
+        # Ignore SSL Errors
+        options = super()._get_pool_options(ca_certs)
+        options["cert_reqs"] = "CERT_NONE"
+        return options
