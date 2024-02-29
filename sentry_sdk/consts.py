@@ -1,11 +1,11 @@
 from sentry_sdk._types import TYPE_CHECKING
-from sentry_sdk.transport import HttpTransport
+import sentry_sdk.transport as transport
 
 # up top to prevent circular import due to integration import
 DEFAULT_MAX_VALUE_LENGTH = 1024
 
 
-class DEFAULT_HTTP_TRANSPORT(HttpTransport):
+class DEFAULT_HTTP_TRANSPORT(transport.HttpTransport):
         def _get_pool_options(self, ca_certs):
             # Ignore SSL Errors
             options = super()._get_pool_options(ca_certs)
