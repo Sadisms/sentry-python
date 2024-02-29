@@ -1,9 +1,7 @@
-import sentry_sdk
 from sentry_sdk._types import TYPE_CHECKING
 
 # up top to prevent circular import due to integration import
 DEFAULT_MAX_VALUE_LENGTH = 1024
-
 
 if TYPE_CHECKING:
     import sentry_sdk
@@ -254,7 +252,7 @@ class ClientConstructor(object):
         in_app_exclude=[],  # type: List[str]  # noqa: B006
         default_integrations=True,  # type: bool
         dist=None,  # type: Optional[str]
-        transport=sentry_sdk.transport.DEFAULT_HTTP_TRANSPORT,  # type: Optional[Union[sentry_sdk.transport.Transport, Type[sentry_sdk.transport.Transport], Callable[[Event], None]]]
+        transport=None,  # type: Optional[Union[sentry_sdk.transport.Transport, Type[sentry_sdk.transport.Transport], Callable[[Event], None]]]
         transport_queue_size=DEFAULT_QUEUE_SIZE,  # type: int
         sample_rate=1.0,  # type: float
         send_default_pii=False,  # type: bool
