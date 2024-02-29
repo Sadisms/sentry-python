@@ -2,7 +2,7 @@ import copy
 import sys
 from contextlib import contextmanager
 
-from sentry_sdk import HttpTransport
+from sentry_sdk.transport import HttpTransport
 from sentry_sdk._compat import with_metaclass
 from sentry_sdk.consts import INSTRUMENTER
 from sentry_sdk.scope import Scope
