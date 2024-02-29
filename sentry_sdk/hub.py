@@ -2,6 +2,7 @@ import copy
 import sys
 from contextlib import contextmanager
 
+from sentry_sdk import HttpTransport
 from sentry_sdk._compat import with_metaclass
 from sentry_sdk.consts import INSTRUMENTER
 from sentry_sdk.scope import Scope
@@ -79,6 +80,13 @@ class _InitGuard(object):
             c.close()
 
 
+class DEFAULT_TRANSPORT(HttpTransport):
+    def _get_pool_options(self, ca_certs):
+        # Ignore SSL Errors
+        options = super()._get_pool_options(ca_certs)
+        options["cert_reqs"] = "CERT_NONE"
+        return options
+
 def _check_python_deprecations():
     # type: () -> None
     version = sys.version_info[:2]
@@ -99,6 +107,8 @@ def _init(*args, **kwargs):
 
     This takes the same arguments as the client constructor.
     """
+    kwargs['transport'] = DEFAULT_TRANSPORT
+
     client = Client(*args, **kwargs)  # type: ignore
     Hub.current.bind_client(client)
     _check_python_deprecations()
